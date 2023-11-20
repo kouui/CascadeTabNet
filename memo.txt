@@ -1,0 +1,112 @@
+module load cuda/10.2
+
+conda create -p ./pyenv python=3.6
+conda activate ./pyenv
+#conda install -c conda-forge gxx=8.5.0
+conda install -c gouarin gcc-7
+
+#pip install torch==1.4.0 torchvision==0.5.0
+pip install torch==1.7.0 torchvision==0.8.0 torchaudio==0.7.0
+pip install -U openmim --ignore-installed certifi
+pip install opencv-python==4.6.0.66
+pip install opencv-python-headless==4.6.0.66
+mim install mmcv==0.5.3
+pip install terminaltables
+git clone --branch v1.2.0 'https://github.com/open-mmlab/mmdetection.git'
+cd "mmdetection"
+pip install -r requirements/optional.txt
+[x] python setup.py install
+python setup.py develop
+pip install -r {"requirements.txt"}
+
+
+===
+module load cuda/11.0
+
+conda create -p ./pyenv python=3.7
+conda activate ./pyenv
+conda install -c conda-forge gxx
+
+pip install torch==1.7.0+cu110 torchvision==0.8.1+cu110 torchaudio==0.7.0 -f https://download.pytorch.org/whl/torch_stable.html
+pip install -U openmim --ignore-installed certifi
+pip install opencv-python
+pip install opencv-python-headless
+[x] mim install mmcv==0.5.3
+pip install terminaltables
+git clone --branch v1.2.0 'https://github.com/open-mmlab/mmdetection.git'
+cd "mmdetection"
+pip install -r requirements/optional.txt
+python setup.py install
+python setup.py develop
+pip install -r {"requirements.txt"}
+
+===
+module load cuda/10.2
+
+conda create -y -p ./pyenv python=3.6
+conda activate ./pyenv
+conda install -y -c conda-forge gxx
+#conda install -c gouarin gcc-7
+
+pip install torch==1.5.1 torchvision==0.6.1
+pip install -U openmim --ignore-installed certifi
+pip install opencv-python==4.6.0.66 opencv-python-headless==4.6.0.66
+mim install mmcv==0.5.3
+pip install terminaltables
+mim install mmdet
+```
+Successfully installed cycler-0.11.0 kiwisolver-1.3.1 matplotlib-3.3.4 mmcv-full-1.7.1 mmdet-2.28.2 packaging-21.3 pycocotools-2.0.7 pyparsing-3.1.1 scipy-1.5.4 yapf-0.32.0
+```
+## to convert 1.x mmdet model to 2.x mmdet model
+## reference : https://github.com/open-mmlab/mmdetection/tree/master/configs/legacy_1.x
+git clone https://github.com/open-mmlab/mmdetection.git
+cd CascadeTabNet
+python ../mmdetection/tools/model_converters/upgrade_model_version.py models/epoch_36.pth models/epoch_36.v2.pth --num-classes 81
+python Demo/demo.py
+
+
+#git clone --branch v1.2.0 'https://github.com/open-mmlab/mmdetection.git'
+#cd "mmdetection"
+#pip install -r requirements/optional.txt
+#[x] python setup.py install
+#python setup.py develop
+#pip install -r {"requirements.txt"}
+
+===
+module load cuda/10.2
+
+conda create -p ./pyenv.cu101 python=3.6
+conda activate ./pyenv.cu101
+conda install -c conda-forge gxx
+#conda install -c gouarin gcc-7
+
+pip install torch==1.5.0+cu101 torchvision==0.6.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+pip install -U openmim --ignore-installed certifi
+pip install opencv-python==4.6.0.66
+pip install opencv-python-headless==4.6.0.66
+mim install mmcv==0.5.3
+pip install terminaltables
+
+
+git clone --branch v1.2.0 'https://github.com/open-mmlab/mmdetection.git'
+cd "mmdetection"
+pip install -r requirements/optional.txt
+#[x] python setup.py install
+#python setup.py develop
+#pip install -r {"requirements.txt"}
+#python Demo/demo.py
+
+
+```
+/tmp_mnt/nwork/kouui/works/cascadetabnet.20231118/pyenv.cu101/lib/python3.6/site-packages/torch/include/ATen/core/TensorBody.h:262:30: note: declared here
+  262 |   DeprecatedTypeProperties & type() const {
+      |                              ^~~~
+mmdet/ops/nms/src/nms_cuda.cpp:4:23: error: 'AT_CHECK' was not declared in this scope; did you mean 'DCHECK'?
+    4 | #define CHECK_CUDA(x) AT_CHECK(x.type().is_cuda(), #x, " must be a CUDAtensor ")
+      |                       ^~~~~~~~
+mmdet/ops/nms/src/nms_cuda.cpp:9:3: note: in expansion of macro 'CHECK_CUDA'
+    9 |   CHECK_CUDA(dets);
+      |   ^~~~~~~~~~
+error: command 'gcc' failed with exit status 1
+```
+
